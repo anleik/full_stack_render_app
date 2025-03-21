@@ -16,6 +16,14 @@ const App = () => {
       });
   }, []);
 
+  const baseUrl = "https://phonebook-backend.onrender.com/api/persons";
+
+  fetch(baseUrl)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error("Error fetching data:", error));
+  
+
   const addPerson = (event) => {
     event.preventDefault();
     const newPerson = { name: newName, number: newNumber };
