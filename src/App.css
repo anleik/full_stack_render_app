@@ -1,6 +1,6 @@
 .error {
-    color: red;
-    background: lightgrey;
+    color: red !important;
+    background: lightgrey !important;
     font-size: 20px;
     border-style: solid;
     border-radius: 5px;
@@ -10,11 +10,15 @@
   
 
   .added {
-    color: green;
-    background: lightgreen;
+    color: green !important;
+    background: lightgreen !important;
     font-size: 20px;
     border-style: solid;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
   }
+
+body {
+  background-color: lightblue;
+}
