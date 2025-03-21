@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import './App.css';
+
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -15,13 +17,6 @@ const App = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-
-  const baseUrl = "https://phonebook-backend.onrender.com/api/persons";
-
-  fetch(baseUrl)
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error("Error fetching data:", error));
   
 
   const addPerson = (event) => {
