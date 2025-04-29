@@ -1,11 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import path from 'path';
-
 require('dotenv').config()
-const app = express();
+const express = require('express')
+const morgan = require('morgan')
+const cors = require('cors')
 const Person = require('./models/person')
+const app = express()
+const path = require('path')
+
 
 app.use(cors());
 app.use(express.json());
@@ -78,14 +78,14 @@ app.get('/info', (req, res) => {
   res.send(`<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`);
 });
 
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, 'dist')));
+// const __dirname = path.resolve();
+// app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 });
