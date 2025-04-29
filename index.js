@@ -3,10 +3,13 @@ import cors from 'cors';
 import morgan from 'morgan';
 import path from 'path';
 
+require('dotenv').config()
 const app = express();
+const Person = require('./models/person')
 
 app.use(cors());
 app.use(express.json());
+
 
 morgan.token('body', (req) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
@@ -82,7 +85,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`)
 });
