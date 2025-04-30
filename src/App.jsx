@@ -70,7 +70,8 @@ const App = () => {
       })
       .catch(error => {
         console.error("Error adding person:", error);
-        setErrorMessage("Failed to add person.");
+        const serverMessage = error.response?.data?.error || "Failed to add person.";
+        setErrorMessage(serverMessage);
         setTimeout(() => setErrorMessage(null), 5000);
       });
   };
@@ -87,7 +88,8 @@ const App = () => {
         })
         .catch(error => {
           console.error("Error deleting person:", error);
-          setErrorMessage(`Failed to delete ${name}.`);
+          const serverMessage = error.response?.data?.error || `Failed to delete ${name}.`;
+          setErrorMessage(serverMessage);
           setTimeout(() => setErrorMessage(null), 5000);
         });
     }

@@ -84,25 +84,15 @@ app.put('/api/persons/:id', (req, res, next) => {
     .catch(error => next(error));
 });
 
-app.post('/api/persons', (req, res) => {
-  const { name, number } = req.body;
-
-  if (!name || !number) {
-    return res.status(400).json({ error: "Name and number are required" });
-  }
-
-  const person = new Person({ name, number });
+app.post('/api/persons', (req, res, next) => {
+  const { name, number } = req.body
+  const person = new Person({ name, number })
 
   person
     .save()
-    .then(savedPerson => {
-      res.status(201).json(savedPerson);
-    })
-    .catch(error => {
-      console.error('Error saving person:', error);
-      res.status(500).json({ error: 'Failed to save person' });
-    });
-});
+    .then(saved => res.status(201).json(saved))
+    .catch(error => next(error))
+})
 
 app.get('/info', (req, res, next) => {
   Person.countDocuments({})
@@ -124,20 +114,20 @@ const unknownEndpoint = (req, res) => {
 }
 app.use(unknownEndpoint)
 
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error, req, res, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-  } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message })
+    return res.status(400).send({ error: 'malformatted id' })
+  }
+  if (error.name === 'ValidationError') {
+    console.log(error.message)
+    return res.status(400).json({ error: error.message })
   }
 
   next(error)
 }
-
 app.use(errorHandler)
-
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
